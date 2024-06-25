@@ -94,7 +94,7 @@ func init() {
 		globals.Logger.Warning("Insecure gRPC server detected. PN_SM4SH_ACCOUNT_GRPC_API_KEY environment variable not set")
 	}
 
-	globals.GRPCAccountClientConnection, err = grpc.Dial(fmt.Sprintf("%s:%s", accountGRPCHost, accountGRPCPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	globals.GRPCAccountClientConnection, err = grpc.NewClient(fmt.Sprintf("dns:%s:%s", accountGRPCHost, accountGRPCPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		globals.Logger.Criticalf("Failed to connect to account gRPC server: %v", err)
 		os.Exit(0)
